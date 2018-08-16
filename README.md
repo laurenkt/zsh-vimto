@@ -17,6 +17,14 @@ Features
 + Reduce the wait timer for switching between modes – default is 0.4s which is very noticable, this plugin reduces it to 1ms
 + tmux support
 
+Customisation
+-------------
+
+To customise the colors used, set the following variables, for example:
+
+	export VIMTO_COLOR_NORMAL_TEXT=white
+	export VIMTO_COLOR_NORMAL_BACKGROUND=yellow
+
 Todo
 ----
 
