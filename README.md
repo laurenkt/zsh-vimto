@@ -17,6 +17,18 @@ Features
 + Reduce the wait timer for switching between modes – default is 0.4s which is very noticable, this plugin reduces it to 1ms
 + tmux support
 
+Installation
+------------
+
+Use your zsh package manager of choice. E.g. with [zplug](https://github.com/zplug/zplug):
+
+	zplug "laurenkt/zsh-vimto"
+	zplug install
+
+If not using a package manager, download `zsh-vimto.sh` to a folder e.g. `~/.zsh/plugins` and then add to your `.zshrc` or equivalent:
+
+	source ~/.zsh/plugins/zsh-vimto.sh
+
 Customisation
 -------------
 
