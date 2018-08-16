@@ -1,6 +1,16 @@
 # Vim mode
 bindkey -v
-export KEYTIMEOUT=1 # Don't take 0.4s to change modes
+
+# Don't take 0.4s to change modes
+export KEYTIMEOUT=1
+
+# Save previous RPROMPT to restore when vim status not displayed
+RPROMPT_PREVIOUS=$RPROMPT
+
+# Default color settings
+if [ -z "$VIMTO_COLOR_NORMAL_TEXT" ]; then VIMTO_COLOR_NORMAL_TEXT=black; fi
+if [ -z "$VIMTO_COLOR_NORMAL_BACKGROUND" ]; then VIMTO_COLOR_NORMAL_BACKGROUND=white; fi
+
 function zle-keymap-select zle-line-init {
 	# If it's not tmux then can use normal sequences
 	if [[ -z "${TMUX}" ]]; then
@@ -18,17 +28,18 @@ function zle-keymap-select zle-line-init {
 	# Command mode
 	if [ $KEYMAP = vicmd ]; then
 		echo -ne $vicmd_seq
-		RPROMPT=$'%K{white} %F{black}NORMAL%f %k'
+		RPROMPT_PREVIOUS=$RPROMPT
+		RPROMPT=$'%K{$VIMTO_COLOR_NORMAL_BACKGROUND} %F{$VIMTO_COLOR_NORMAL_TEXT}NORMAL%f %k'
 	# Insert mode
 	else
 		echo -ne $viins_seq
-		RPROMPT=""
+		RPROMPT=$RPROMPT_PREVIOUS
 	fi
 	zle reset-prompt
 }
 
 function accept-line-clear-rprompt {
-    export RPROMPT=""
+    export RPROMPT=$RPROMPT_PREVIOUS
     zle reset-prompt
     zle accept-line
 }
@@ -49,4 +60,4 @@ bindkey '^h' backward-delete-char
 bindkey '^r' history-incremental-search-backward
 
 # Need to initially clear RPROMPT for it to work on first prompt
-export RPROMPT=''
+export RPROMPT=$RPROMPT_PREVIOUS
